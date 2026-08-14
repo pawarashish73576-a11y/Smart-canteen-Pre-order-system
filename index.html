@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Canteen Pre-Order System</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f4f6f8;
+    color: #333;
+}
+
+header {
+    background: #ff6b00;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin-bottom: 8px;
+}
+
+nav {
+    background: #222;
+    padding: 12px;
+    text-align: center;
+}
+
+nav button {
+    background: #222;
+    color: white;
+    border: none;
+    margin: 5px 15px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+nav button:hover {
+    color: #ff6b00;
+}
+
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 25px auto;
+}
+
+.section {
+    display: none;
+}
+
+.active {
+    display: block;
+}
+
+.login-box {
+    max-width: 400px;
+    background: white;
+    padding: 25px;
+    margin: 40px auto;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px #ccc;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.btn {
+    background: #ff6b00;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: #e85d00;
+}
+
+.menu {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.food {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px #ddd;
+    text-align: center;
+}
+
+.food h3 {
+    margin-bottom: 10px;
+}
+
+.price {
+    color: #ff6b00;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 10px;
+}
+
+.cart-box, .order-box {
+    background: white;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px #ddd;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background: #ff6b00;
+    color: white;
+}
+
+.status {
+    color: green;
+    font-weight: bold;
+}
+
+footer {
+    background: #222;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin-top: 40px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🍔 Smart Canteen</h1>
+    <p>Pre-Order Food & Save Time</p>
+</header>
+
+<nav>
+    <button onclick="showSection('login')">Login</button>
+    <button onclick="showSection('menu')">Menu</button>
+    <button onclick="showSection('cart')">Cart 🛒</button>
+    <button onclick="showSection('orders')">My Orders</button>
+</nav>
+
+<div class="container">
+
+<!-- LOGIN -->
+<section id="login" class="section active">
+
+    <div class="login-box">
+        <h2>Student Login</h2>
+        <br>
+
+        <label>Email</label>
+        <input type="email" id="email" placeholder="Enter email">
+
+        <label>Password</label>
+        <input type="password" id="password" placeholder="Enter password">
+
+        <button class="btn" onclick="login()">Login</button>
+
+        <p id="loginMessage" style="margin-top:15px;"></p>
+    </div>
+
+</section>
+
+<!-- MENU -->
+<section id="menu" class="section">
+
+    <h2>Today's Menu</h2>
+
+    <div class="menu">
+
+        <div class="food">
+            <h3>🍕 Pizza</h3>
+            <p>Cheese Pizza</p>
+            <div class="price">₹80</div>
+            <button class="btn" onclick="addToCart('Pizza',80)">
+                Add to Cart
+            </button>
+        </div>
+
+        <div class="food">
+            <h3>🍔 Burger</h3>
+            <p>Veg Burger</p>
+            <div class="price">₹60</div>
+            <button class="btn" onclick="addToCart('Burger',60)">
+                Add to Cart
+            </button>
+        </div>
+
+        <div class="food">
+            <h3>🍟 French Fries</h3>
+            <p>Crispy Fries</p>
+            <div class="price">₹50</div>
+            <button class="btn" onclick="addToCart('French Fries',50)">
+                Add to Cart
+            </button>
+        </div>
+
+        <div class="food">
+            <h3>🥪 Sandwich</h3>
+            <p>Veg Sandwich</p>
+            <div class="price">₹40</div>
+            <button class="btn" onclick="addToCart('Sandwich',40)">
+                Add to Cart
+            </button>
+        </div>
+
+        <div class="food">
+            <h3>🍜 Noodles</h3>
+            <p>Veg Hakka Noodles</p>
+            <div class="price">₹70</div>
+            <button class="btn" onclick="addToCart('Noodles',70)">
+                Add to Cart
+            </button>
+        </div>
+
+        <div class="food">
+            <h3>🥤 Cold Drink</h3>
+            <p>Chilled Soft Drink</p>
+            <div class="price">₹30</div>
+            <button class="btn" onclick="addToCart('Cold Drink',30)">
+                Add to Cart
+            </button>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- CART -->
+<section id="cart" class="section">
+
+    <h2>Shopping Cart</h2>
+
+    <div class="cart-box">
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Food</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th>Remove</th>
+                </tr>
+            </thead>
+
+            <tbody id="cartItems"></tbody>
+
+        </table>
+
+        <br>
+
+        <h3>Total Amount: ₹<span id="total">0</span></h3>
+
+        <br>
+
+        <button class="btn" onclick="placeOrder()">
+            Place Order & Pay
+        </button>
+
+    </div>
+
+</section>
+
+<!-- ORDERS -->
+<section id="orders" class="section">
+
+    <h2>My Orders</h2>
+
+    <div id="orderList">
+        <p>No orders placed yet.</p>
+    </div>
+
+</section>
+
+</div>
+
+<footer>
+    <p>© 2026 Smart Canteen Pre-Order System</p>
+</footer>
+
+<script>
+
+let cart = [];
+let orders = [];
+
+/* SHOW SECTION */
+function showSection(sectionId) {
+
+    let sections = document.querySelectorAll(".section");
+
+    sections.forEach(section => {
+        section.classList.remove("active");
+    });
+
+    document.getElementById(sectionId).classList.add("active");
+
+    if(sectionId === "cart") {
+        displayCart();
+    }
+
+    if(sectionId === "orders") {
+        displayOrders();
+    }
+}
+
+
+/* LOGIN */
+function login() {
+
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+
+    if(email === "" || password === "") {
+
+        document.getElementById("loginMessage").innerHTML =
+        "<span style='color:red'>Please enter email and password.</span>";
+
+        return;
+    }
+
+    document.getElementById("loginMessage").innerHTML =
+    "<span style='color:green'>Login successful!</span>";
+
+    setTimeout(() => {
+        showSection("menu");
+    }, 1000);
+}
+
+
+/* ADD TO CART */
+function addToCart(name, price) {
+
+    let existing = cart.find(item => item.name === name);
+
+    if(existing) {
+        existing.quantity++;
+    }
+    else {
+        cart.push({
+            name: name,
+            price: price,
+            quantity: 1
+        });
+    }
+
+    alert(name + " added to cart!");
+}
+
+
+/* DISPLAY CART */
+function displayCart() {
+
+    let cartItems = document.getElementById("cartItems");
+
+    cartItems.innerHTML = "";
+
+    let total = 0;
+
+    cart.forEach((item, index) => {
+
+        let itemTotal = item.price * item.quantity;
+
+        total += itemTotal;
+
+        cartItems.innerHTML += `
+        <tr>
+            <td>${item.name}</td>
+            <td>₹${item.price}</td>
+            <td>${item.quantity}</td>
+            <td>₹${itemTotal}</td>
+            <td>
+                <button class="btn"
+                onclick="removeItem(${index})">
+                Remove
+                </button>
+            </td>
+        </tr>
+        `;
+    });
+
+    document.getElementById("total").innerText = total;
+}
+
+
+/* REMOVE ITEM */
+function removeItem(index) {
+
+    cart.splice(index, 1);
+
+    displayCart();
+}
+
+
+/* PLACE ORDER */
+function placeOrder() {
+
+    if(cart.length === 0) {
+
+        alert("Your cart is empty!");
+
+        return;
+    }
+
+    let total = 0;
+
+    cart.forEach(item => {
+        total += item.price * item.quantity;
+    });
+
+    let pickupTime = new Date();
+
+    pickupTime.setMinutes(
+        pickupTime.getMinutes() + 20
+    );
+
+    let time =
+        pickupTime.getHours() +
+        ":" +
+        String(pickupTime.getMinutes()).padStart(2,"0");
+
+    let order = {
+
+        id: "ORD" + Math.floor(Math.random()*10000),
+
+        items: [...cart],
+
+        total: total,
+
+        payment: "Successful",
+
+        pickup: time,
+
+        status: "Preparing"
+    };
+
+    orders.push(order);
+
+    cart = [];
+
+    alert(
+        "Order placed successfully!\n" +
+        "Payment Successful\n" +
+        "Pickup Time: " + time
+    );
+
+    showSection("orders");
+
+    displayOrders();
+}
+
+
+/* DISPLAY ORDERS */
+function displayOrders() {
+
+    let orderList = document.getElementById("orderList");
+
+    if(orders.length === 0) {
+
+        orderList.innerHTML =
+        "<p>No orders placed yet.</p>";
+
+        return;
+    }
+
+    orderList.innerHTML = "";
+
+    orders.forEach((order, index) => {
+
+        let foodNames = order.items
+        .map(item => item.name + " × " + item.quantity)
+        .join(", ");
+
+        orderList.innerHTML += `
+
+        <div class="order-box">
+
+            <h3>Order ID: ${order.id}</h3>
+
+            <p>
+                <b>Items:</b> ${foodNames}
+            </p>
+
+            <p>
+                <b>Total:</b> ₹${order.total}
+            </p>
+
+            <p>
+                <b>Payment:</b>
+                <span class="status">
+                ${order.payment}
+                </span>
+            </p>
+
+            <p>
+                <b>Estimated Pickup:</b>
+                ${order.pickup}
+            </p>
+
+            <p>
+                <b>Status:</b>
+                <span class="status">
+                ${order.status}
+                </span>
+            </p>
+
+            <br>
+
+            <button class="btn"
+            onclick="markReady(${index})">
+                Update Order
+            </button>
+
+        </div>
+
+        `;
+    });
+}
+
+
+/* ORDER READY */
+function markReady(index) {
+
+    orders[index].status = "Ready for Pickup";
+
+    alert(
+        "🔔 Notification:\n\n" +
+        "Your order " +
+        orders[index].id +
+        " is ready for pickup!"
+    );
+
+    displayOrders();
+}
+
+</script>
+
+</body>
+</html>
